@@ -1,5 +1,6 @@
 % This script calculates the center of clusters after the analysis by
 % my_cluster.m Andre Thomaz 11/07/2017.
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %TO DO
 %make a function so we dont keep repeating
@@ -9,7 +10,7 @@ if ~exist('fileName_synapses','var')|| isempty(fileName_synapses)
     [userfilein_synapses, userdirin_synapses]=uigetfile({
         '*.mat','Data file (*.mat)';...
         '*.*','All Files (*.*)'},'Select the synapse cluster .mat file ',...
-        'C:\Users\athomaz\Google Drive\superresolution\analysis\mycodes\superres-matlab\cluster');
+        'D:\Andre\Data\2017\LTD\20171103\control1\analysis\Cluster');
     fileName_synapses=fullfile(userdirin_synapses,userfilein_synapses);
 else
     if ~exist(fileName_synapses,'file')
@@ -19,6 +20,7 @@ else
 end
 
 homer = load(fileName_synapses);
+homerCutoff = 50000; %in this case everything below 50000nm is being cutoff
 
 warning('off')
 [synNumb,synNull]=size(homer.Synapses); % get number of synapses from the output of cluster.m 
@@ -35,7 +37,7 @@ if ~exist('fileName_ampar','var')|| isempty(fileName_ampar)
     [userfilein_ampar, userdirin_ampar]=uigetfile({
         '*.txt','Data file (*.txt)';...
         '*.*','All Files (*.*)'},'Select the ampar cluster file ',...
-        'C:\Users\athomaz\Google Drive\superresolution\analysis\mycodes\superres-matlab\cluster\data test');
+        'D:\Andre\Data\2017\LTD\20171103\control1\analysis\Cluster');
     fileName_ampar=fullfile(userdirin_ampar,userfilein_ampar);
 else
     if ~exist(fileName_ampar,'file')
@@ -52,7 +54,7 @@ if ~exist('fileName_nmdar','var')|| isempty(fileName_nmdar)
     [userfilein_nmdar, userdirin_nmdar]=uigetfile({
         '*.txt','Data file (*.txt)';...
         '*.*','All Files (*.*)'},'Select the nmdar cluster file ',...
-        'C:\Users\athomaz\Google Drive\superresolution\analysis\mycodes\superres-matlab\cluster\data test');
+        'D:\Andre\Data\2017\LTD\20171103\control1\analysis\Cluster');
     fileName_nmdar=fullfile(userdirin_nmdar,userfilein_nmdar);
 else
     if ~exist(fileName_nmdar,'file')
@@ -130,7 +132,7 @@ syn_rg=nmdar.Synapses{i}; % load data
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Find the center of Ampar
+%Find the center of Nmdar
 radii=1;
 [Ctr_nmdar,Sig_nmdar] = subclust(syn_rg,radii); % find center of a subcluster and the range of influence of the center
 
