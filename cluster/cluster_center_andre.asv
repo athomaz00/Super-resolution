@@ -165,7 +165,7 @@ scatter3(Nmdar_centers(:,1), Nmdar_centers(:,2), Nmdar_centers(:,3),10,'filled',
 
 xlswrite(strcat(userdirin_synapses,'Homer_centers-after.xlsx'),Homer_centers);
 xlswrite(strcat(userdirin_synapses,'Ampar_centers-after.xlsx'),Ampar_centers);
-xlswrite(strcat(userdirin_synapses,'Nmdar_centers-aftt.xlsx'),Nmdar_centers);
+xlswrite(strcat(userdirin_synapses,'Nmdar_centers-after.xlsx'),Nmdar_centers);
 
 
 
