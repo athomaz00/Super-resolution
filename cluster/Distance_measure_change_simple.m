@@ -3,7 +3,7 @@ clear;%clear
 close all;% Close all figures
 %%
 %load ampar and homer cluster center data before
-path_before='G:\Andre\Data\2017\LTD\20171103\cell1\analysis\cluster';
+path_before='D:\Andre\Data\2017\LTD\20171110\ctr3\analysis';
 if ~exist('fileName1','var')|| isempty(fileName1)
     [userfilein, userdirin]=uigetfile({
         '*.xlsx','Data file (*.xlsx)';...
@@ -42,7 +42,7 @@ d_ampar_before=length(AMPAR_Center_before);
 
 %%
 %load ampar and homer cluster center data after
-path_after='G:\Andre\Data\2017\LTD\20171103\cell1\analysis\cluster';
+path_after='D:\Andre\Data\2017\LTD\20171110\ctr3\analysis';
 if ~exist('fileName3','var')|| isempty(fileName3)
     [userfilein, userdirin]=uigetfile({
         '*.xlsx','Data file (*.xlsx)';...
@@ -115,4 +115,4 @@ for i=1:d_homer_after
 end
 %%
 % output
-xlswrite(strcat(userdirin,'dist-change-homer-ampar-LTD-1.xlsx'), dist_change);
+xlswrite(strcat(userdirin,'dist-change-homer-ampar-CTR-4.xlsx'), dist_change);

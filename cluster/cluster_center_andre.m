@@ -10,7 +10,7 @@ if ~exist('fileName_synapses','var')|| isempty(fileName_synapses)
     [userfilein_synapses, userdirin_synapses]=uigetfile({
         '*.mat','Data file (*.mat)';...
         '*.*','All Files (*.*)'},'Select the synapse cluster .mat file ',...
-        'G:\Andre\Data\2017\LTD\20171110\cell2\analysis\cluster');
+        'D:\Andre\Data\2017\LTD\20171110\ctr3\analysis\cluster');
     fileName_synapses=fullfile(userdirin_synapses,userfilein_synapses);
 else
     if ~exist(fileName_synapses,'file')
@@ -37,7 +37,7 @@ if ~exist('fileName_ampar','var')|| isempty(fileName_ampar)
     [userfilein_ampar, userdirin_ampar]=uigetfile({
         '*.txt','Data file (*.txt)';...
         '*.*','All Files (*.*)'},'Select the ampar cluster file ',...
-        'G:\Andre\Data\2017\LTD\20171110\cell2\analysis\cluster');
+        'D:\Andre\Data\2017\LTD\20171110\ctr3\analysis\cluster');
     fileName_ampar=fullfile(userdirin_ampar,userfilein_ampar);
 else
     if ~exist(fileName_ampar,'file')
@@ -54,7 +54,7 @@ if ~exist('fileName_nmdar','var')|| isempty(fileName_nmdar)
     [userfilein_nmdar, userdirin_nmdar]=uigetfile({
         '*.txt','Data file (*.txt)';...
         '*.*','All Files (*.*)'},'Select the nmdar cluster file ',...
-        'G:\Andre\Data\2017\LTD\20171110\cell1\analysis\cluster');
+        'D:\Andre\Data\2017\LTD\20171110\ctr3\analysis\cluster');
     fileName_nmdar=fullfile(userdirin_nmdar,userfilein_nmdar);
 else
     if ~exist(fileName_nmdar,'file')
@@ -165,7 +165,7 @@ scatter3(Nmdar_centers(:,1), Nmdar_centers(:,2), Nmdar_centers(:,3),10,'filled',
 
 xlswrite(strcat(userdirin_synapses,'Homer_centers-after.xlsx'),Homer_centers);
 xlswrite(strcat(userdirin_synapses,'Ampar_centers-after.xlsx'),Ampar_centers);
-xlswrite(strcat(userdirin_synapses,'Nmdar_centers-aftt.xlsx'),Nmdar_centers);
+xlswrite(strcat(userdirin_synapses,'Nmdar_centers-after.xlsx'),Nmdar_centers);
 
 
 
