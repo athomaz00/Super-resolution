@@ -29,7 +29,7 @@ mskHA = HA['dist_h-h']<=max_dist
 HA['dist'] = HA['after'] - HA['before']
 HA = HA[mskHA]
 synNumbHACtr = HA.shape[0]
-labelAMPARCtr = 'Control AMPAR ' + str(synNumbHACtr) +' synapses'
+labelAMPARCtr = 'CTR ' + str(synNumbHACtr) +' synapses'
 
 #################AMPAR LTD######################
 #HAL1 = pd.read_excel('dist-change-homer-ampar-LTD-1.xlsx', names= ['before', 'after', 'dist_h-h'])
@@ -43,7 +43,7 @@ HAL['dist'] = HAL['after'] - HAL['before']
 HAL = HAL[mskHAL]
 synNumbHALTD = HAL.shape[0]
 
-labelAMPARLTD = 'LTD AMPAR ' + str(synNumbHALTD) +' synapses'
+labelAMPARLTD = 'LTD ' + str(synNumbHALTD) +' synapses'
 
 
 plt.figure()
@@ -53,6 +53,10 @@ plt.xlim(xlim)
 #plt.plot(xline, yline)
 #plt.plot(xlinep, yline, 'r')
 plt.legend()
+plt.xlabel('Relative Distance (nm)')
+plt.ylabel('Relative Frequency')
+plt.title('Relative Distance Homer-Ampar')
+plt.xticks(np.arange(-500,600,100))
 
 
 
@@ -64,7 +68,7 @@ mskHN = HN['dist_h-h']<=max_dist
 HN['dist'] = HN['after'] - HN['before']
 HN = HN[mskHN]
 synNumbHNCtr = HN.shape[0]
-labelNMDARCtr = 'Control NMDAR ' + str(synNumbHNCtr) +' synapses'
+labelNMDARCtr = 'CTR ' + str(synNumbHNCtr) +' synapses'
 
 
 ###########NMDAR LTD########################
@@ -77,7 +81,7 @@ HNL['dist'] = HNL['after'] - HNL['before']
 HNL = HNL[mskHNL]
 synNumbHNLTD = HNL.shape[0]
 
-labelNMDARLTD = 'LTD NMDAR ' + str(synNumbHNLTD) +' synapses'
+labelNMDARLTD = 'LTD ' + str(synNumbHNLTD) +' synapses'
 
 #plot NMDAR+Control
 plt.figure()
@@ -86,40 +90,53 @@ sns.distplot(HN['dist'], bins=mybins, label=labelNMDARCtr, kde=False, hist_kws=d
 #plt.plot(xline, yline)
 #plt.plot(xlinep, yline, 'r')
 plt.legend()
+plt.xlabel('Relative Distance (nm)')
+plt.ylabel('Relative Frequency')
+plt.title('Relative Distance Homer-Nmdar')
+plt.xticks(np.arange(-500,600,100))
 
 
 
 
 
 plt.figure()
-sns.distplot(HAL['dist'], bins=mybins, label=labelAMPARLTD, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-sns.distplot(HNL['dist'], bins=mybins, label=labelNMDARLTD, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
+sns.distplot(HAL['dist'], bins=mybins, label='Ampar '+labelAMPARLTD, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
+sns.distplot(HNL['dist'], bins=mybins, label='Nmdar '+labelNMDARLTD, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
 plt.legend()
+plt.xlabel('Relative Distance (nm)')
+plt.ylabel('Relative Frequency')
+plt.title('Relative Distance Comparison Between Nmdar/Homer and Ampar/Homer LTD')
+plt.xticks(np.arange(-500,600,100))
+
+
 
 
 plt.figure()
 sns.distplot(HA['dist'], bins=mybins, label=labelAMPARCtr, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
 sns.distplot(HN['dist'], bins=mybins, label=labelNMDARCtr, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
 plt.legend()
-
+plt.xlabel('Relative Distance (nm)')
+plt.ylabel('Relative Frequency')
+plt.title('Relative Distance Comparison Between Nmdar/Homer and Ampar/Homer CTR')
+plt.xticks(np.arange(-500,600,100))
 
 
 #########Not dist change
-bins2 = np.arange(0,500,10)
+bins2 = np.arange(0,500,30)
 plt.figure()
-sns.distplot(HAL['before'], bins=bins2, label='AMPAR Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1))
+sns.distplot(np.log10(HAL['before']), bins=30, label='AMPAR Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1))
 plt.legend()
-plt.xlim(0,500)
+#plt.xlim(0,500)
 plt.figure()
-sns.distplot(HAL['after'], bins=bins2, label='AMPAR After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
+sns.distplot(np.log10(HAL['after']), bins=30, label='AMPAR After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
 plt.legend()
-plt.xlim(0,500)
+#plt.xlim(0,500)
 plt.figure()
-sns.distplot(HA['before'], bins=bins2, label='AMPAR Ctr Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
-plt.xlim(0,500)
+sns.distplot(np.log10(HA['before']), bins=30, label='AMPAR Ctr Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
+#plt.xlim(0,500)
 plt.figure()
-sns.distplot(HA['after'], bins=bins2, label='AMPAR Ctr After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
-plt.xlim(0,500)
+sns.distplot(np.log10(HA['after']), bins=30, label='AMPAR Ctr After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
+#plt.xlim(0,500)
 
 plt.legend()
 

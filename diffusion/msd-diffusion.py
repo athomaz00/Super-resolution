@@ -63,8 +63,8 @@ def integ(bins, params1, params2):
     print('Percentage of 2 int', A2)
     return A1, A2
 ##############################################################################
-fileName_QD1 = 'nmdar-after-for_diffusion-LTD-2.txt'
-fileName_QD2 = 'nmdar-after-for_diffusion-LTD-3.txt'
+fileName_QD1 = 'nmdar-before-for_diffusion-CTR-1.txt'
+fileName_QD2 = 'nmdar-before-for_diffusion-CTR-2.txt'
 #fileName_QD3 = 'nmdar-after-for_diffusion-LTD-3.txt'
 data_QD1 = pd.read_csv(fileName_QD1, sep="\t");
 #data_QD2 = pd.read_csv(fileName_QD2, sep="\t");
@@ -211,10 +211,10 @@ plt.fill(bins_plot_d,g1, color='r', alpha=0.2)
 #plt.plot(bins_plot_d,g2 ,color='r',lw=2,label='model')
 plt.fill(bins_plot_d,g2, color='g', alpha=0.2)
 plt.plot(bins_plot_d,g2+g1, color='b' ,lw=2,label='model')
-plt.annotate('mean: '+"{0:.2f}".format(params_d1[0]), xy=(-6, 80), color='r')
-plt.annotate('sigma: '+"{0:.2f}".format(params_d1[1]), xy=(-6, 75), color='r')
-plt.annotate('mean: '+"{0:.2f}".format(params_d2[0]), xy=(-6, 70), color='g')
-plt.annotate('sigma: '+"{0:.2f}".format(params_d2[1]), xy=(-6, 65), color='g')
+plt.annotate('mean: '+"{0:.2f}".format(params_d1[0]), xy=(-6, 70), color='r')
+plt.annotate('sigma: '+"{0:.2f}".format(params_d1[1]), xy=(-6, 65), color='r')
+plt.annotate('mean: '+"{0:.2f}".format(params_d2[0]), xy=(-6, 60), color='g')
+plt.annotate('sigma: '+"{0:.2f}".format(params_d2[1]), xy=(-6, 55), color='g')
 plt.annotate("{0:.0f}".format(A1_d)+"%", xy=(params_d1[0]-0.07, params_d1[2]/2.5), fontsize=17, fontweight='bold')
 plt.annotate("{0:.0f}".format(A2_d)+"%", xy=(params_d2[0]-0.09, params_d2[2]/3.0), fontsize=17, fontweight='bold')
 plt.xlabel('log D (um^2/s)')
@@ -281,10 +281,10 @@ A1_t, A2_t = integ(bins_t, params_t_1, params_t_2)
 plt.fill(bins_t,  gauss(bins_t,*params_t_1 ), color='g', alpha=0.2)
 #plt.plot(bins_t, gauss(bins_t,*params_t_2 ), color='g')
 plt.fill(bins_t,  gauss(bins_t,*params_t_2 ), color='r', alpha=0.2)
-plt.annotate('mean: '+"{0:.2f}".format(params_t_1[0]), xy=(-1.0, 50), color='g')
-plt.annotate('sigma: '+"{0:.2f}".format(params_t_1[1]), xy=(-1.0, 45), color='g')
-plt.annotate('mean: '+"{0:.2f}".format(params_t_2[0]), xy=(-1.0, 40), color='r')
-plt.annotate('sigma: '+"{0:.2f}".format(params_t_2[1]), xy=(-1.0, 35), color='r')
+plt.annotate('mean: '+"{0:.2f}".format(params_t_1[0]), xy=(-1.0, 35), color='g')
+plt.annotate('sigma: '+"{0:.2f}".format(params_t_1[1]), xy=(-1.0, 30), color='g')
+plt.annotate('mean: '+"{0:.2f}".format(params_t_2[0]), xy=(-1.0, 25), color='r')
+plt.annotate('sigma: '+"{0:.2f}".format(params_t_2[1]), xy=(-1.0, 20), color='r')
 plt.annotate("{0:.0f}".format(A1_t)+"%", xy=(params_t_1[0]-.05, params_t_1[2]/2.5), fontsize=17, fontweight='bold')
 plt.annotate("{0:.0f}".format(A2_t)+"%", xy=(params_t_2[0]-0.07, params_t_2[2]/2.5), fontsize=17, fontweight='bold')
 plt.plot(bins_t, results_t_bmm.best_fit, color='b', lw=2, label='model')
