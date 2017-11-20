@@ -21,7 +21,7 @@ from scipy.optimize import curve_fit
 
 
 #Load file
-fileName_QD = 'nmdar-before-diff-LTD-2-3.xlsx'
+fileName_QD = r'C:\Users\athomaz\Google Drive\superresolution\analysis\mycodes\superres-matlab\diffusion\outuput merged files'
 data_QD = pd.read_excel(fileName_QD)
 
 fileName_QD1 = 'ampar-before-diff-LTD-3-4.xlsx'
