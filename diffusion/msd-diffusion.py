@@ -1,17 +1,20 @@
-###########################################################################################################
-#This code calculates the Diffusion Coefficient and Trajectory Range of moving particles.
-#Input: position of particles after all corrections. Txt file in data_QD variable
-#Plots the histogram of Diffusion Coefficients and Trajectory Range
-#To calculate the Trajectory Range the convex_hull is calculated and the vertices with the highest distance 
-#between them are considered the trajectory range(distance between them)
-#Diffusion coefficient is calculated using mean square displacement
-# D = MSD/(2*d*dt) where d is the dimensionality (1,2,3)
-#MSD is the displacement in the position of the particles for various lag times. 
-#Code by Andre Thomaz 11/15/2017, adapted from Matlab version from Selvin Lab
-#############################################################################################################
-############TO DO LIST#######################################################################################
-#Write a function py file for fMSD
-#Comment the steps
+# =============================================================================
+# ###########################################################################################################
+# #This code calculates the Diffusion Coefficient and Trajectory Range of moving particles.
+# #Input: position of particles after all corrections. Txt file in data_QD variable
+# #Plots the histogram of Diffusion Coefficients and Trajectory Range
+# #To calculate the Trajectory Range the convex_hull is calculated and the vertices with the highest distance 
+# #between them are considered the trajectory range(distance between them)
+# #Diffusion coefficient is calculated using mean square displacement
+# # D = MSD/(2*d*dt) where d is the dimensionality (1,2,3)
+# #MSD is the displacement in the position of the particles for various lag times. 
+# #Code by Andre Thomaz 11/15/2017, adapted from Matlab version from Selvin Lab
+# #############################################################################################################
+# ############TO DO LIST#######################################################################################
+# #Write a function py file for fMSD
+# #Comment the steps
+#
+# =============================================================================
 
 
 import matplotlib.pyplot as plt
@@ -49,7 +52,7 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
     
 
 ##############################################################################
-fileName_QD1 = 'nmdar-after-for_diffusion-LTD-3.txt'
+fileName_QD1 = 'ampar-after-for_diffusion-CTR-1.txt'
 #fileName_QD2 = 'nmdar-before-for_diffusion-CTR-2.txt'
 #fileName_QD3 = 'nmdar-after-for_diffusion-LTD-3.txt'
 data_QD1 = pd.read_csv(fileName_QD1, sep="\t");

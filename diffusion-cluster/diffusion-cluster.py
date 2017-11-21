@@ -6,10 +6,12 @@ Created on Fri Nov 17 17:57:43 2017
 
 """
 # =============================================================================
-# This code calculates cluster based positions points detecteds using DBSCAN method
-# and K-means method to calculate centers, both from sklearn
+# This code calculates cluster based positions points detected using DBSCAN 
+# and K-means methods to calculate centers, both from sklearn
 #input = super resolution file after all corrections
 #output = matrix for each cluster detected and its center
+#################To Do################################
+#1.Check if it is better to save as dictionary os dataframe
 # =============================================================================
 
 from mpl_toolkits.mplot3d import Axes3D
@@ -80,15 +82,7 @@ for i, part in enumerate(file2.particle.unique()):
     
 np.save("Ampar-before-particles-centers.npy", receptor_centers)
 
-aa=[]
-for k in receptor_centers.keys():
-    aa.append(receptor_centers[k][1])
 
-
-for pp, centers in receptor_centers.items():
-
-    if aa[index] == centers[1]:
-        print(pp)
 
 #file3 = pd.read_excel('ampar-before-tracking-CTR-1.xlsx')
 #file3 = file3.drop(file3.columns[[0, 1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 14, 15]], axis=1) 
