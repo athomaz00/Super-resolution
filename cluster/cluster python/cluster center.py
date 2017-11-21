@@ -27,7 +27,7 @@ from sklearn.cluster import DBSCAN, KMeans
 
 
 #Load super resolution file and plot the 2D points
-file1 = pd.read_excel('homer_after-CTR-1.xlsx', names=['x', 'y', 'z'])
+file1 = pd.read_excel('homer_after-LTD-3.xlsx', names=['x', 'y', 'z'])
 
 #file1 = file1.drop(file1.columns[[0, 1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 14, 15]], axis=1) 
 fig = plt.figure()
@@ -60,11 +60,11 @@ for j in range(n_clusters_):
     clusters_centers[j] = [kCluster, kCenter ]
     ax.scatter(kCenter[0], kCenter[1], s=10, c='b')
 
-np.save("Homer-after-clusters-centers-CTR-1.npy", clusters_centers)
+np.save("Homer-after-clusters-centers-LTD-3.npy", clusters_centers)
 
 #Create a dictionary for the QD data, key particle and values x,y,z position and center 
 
-file2 = pd.read_excel('ampar-after-tracking-CTR-1.xlsx')
+file2 = pd.read_excel('nmdar-after-tracking-LTD-3.xlsx')
 
 file2 = file2.drop(file2.columns[[0, 1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 14, 15]], axis=1) 
 
@@ -81,7 +81,7 @@ for i, part in enumerate(file2.particle.unique()):
     #ax.scatter(tt.x, tt.y, s=5, c='g', alpha=0.2)
     #ax.scatter(rCenter[0], rCenter[1], s=10, c='g')
     
-np.save("Ampar-after-particles-centers-CTR-1.npy", receptor_centers)
+np.save("Nmdar-after-particles-centers-LTD-3.npy", receptor_centers)
 
 
 

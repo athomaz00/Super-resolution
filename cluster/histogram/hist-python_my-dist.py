@@ -14,47 +14,75 @@ sns.set(color_codes=True)
 
 mybins  = np.arange(-500,500,50)
 xlim = (-500,500)
-max_dist = 500.00
+ylim = (0,0.0045)
 
 
 
-plt.close("all")
+
+#plt.close("all")
 ##########Ampar Control##############
-HAb = pd.read_excel('dist-homer-ampar-before-LTD-3.xlsx')
-HAa = pd.read_excel('dist-homer-ampar-after-LTD-3.xlsx')
-dist_AP_CTR = []
-for i, row in HAb.iterrows():
-   if row['Homer Number'] in HAa['Homer Number'].tolist():
-       temp = (HAa[HAa['Homer Number']==row['Homer Number']].Distance - row['Distance']).tolist()
-       dist_AP_CTR.append(temp)
+HAb = pd.read_excel('dist-homer-ampar-before-ctr-1.xlsx')
+HAa = pd.read_excel('dist-homer-ampar-after-ctr-1.xlsx')
+centerBA = np.load('homer-ampar-BfAf-CTR-1.npy')
+dist_AP_CTR1 = HAa[HAa['Homer Number']==np.sort(centerBA[:,1])].Distance.values - HAb[HAb['Homer Number']==centerBA[:,0]].Distance.values
+
+HAb = pd.read_excel('dist-homer-ampar-before-ctr-2.xlsx')
+HAa = pd.read_excel('dist-homer-ampar-after-ctr-2.xlsx')
+centerBA = np.load('homer-ampar-BfAf-CTR-2.npy')
+dist_AP_CTR2 = HAa[HAa['Homer Number']==np.sort(centerBA[:,1])].Distance.values - HAb[HAb['Homer Number']==centerBA[:,0]].Distance.values
+
+HAb = pd.read_excel('dist-homer-ampar-before-ctr-3.xlsx')
+HAa = pd.read_excel('dist-homer-ampar-after-ctr-3.xlsx')
+centerBA = np.load('homer-ampar-BfAf-CTR-3.npy')
+dist_AP_CTR3 = HAa[HAa['Homer Number']==np.sort(centerBA[:,1])].Distance.values - HAb[HAb['Homer Number']==centerBA[:,0]].Distance.values
+
+
+HAb = pd.read_excel('dist-homer-ampar-before-ctr-4.xlsx')
+HAa = pd.read_excel('dist-homer-ampar-after-ctr-4.xlsx')
+centerBA = np.load('homer-ampar-BfAf-CTR-4.npy')
+dist_AP_CTR4 = HAa[HAa['Homer Number']==np.sort(centerBA[:,1])].Distance.values - HAb[HAb['Homer Number']==centerBA[:,0]].Distance.values
     
+dist_AP_CTR = np.concatenate((dist_AP_CTR1, dist_AP_CTR2))
+label_AP_CTR = len(dist_AP_CTR)
 
 
-
-HA = HAa['Distance'] - HAb['Distance']
-
-synNumbHACtr = HA.shape[0]
-labelAMPARCtr = 'CTR ' + str(synNumbHACtr) +' synapses'
 
 #################AMPAR LTD######################
-#HAL1 = pd.read_excel('dist-change-homer-ampar-LTD-1.xlsx', names= ['before', 'after', 'dist_h-h'])
-#HAL2 = pd.read_excel('dist-change-homer-ampar-LTD-2.xlsx', names= ['before', 'after', 'dist_h-h'])
-HAL3 = pd.read_excel('dist-change-homer-ampar-LTD-3.xlsx', names= ['before', 'after', 'dist_h-h'])
-HAL4 = pd.read_excel('dist-change-homer-ampar-LTD-4.xlsx', names= ['before', 'after', 'dist_h-h'])
-#HAL5 = pd.read_excel('dist-change-homer-ampar-LTD-5.xlsx', names= ['before', 'after', 'dist_h-h'])
-HAL = pd.concat([HAL3, HAL4], ignore_index=True)
-mskHAL = HAL['dist_h-h']<=max_dist
-HAL['dist'] = HAL['after'] - HAL['before']
-HAL = HAL[mskHAL]
-synNumbHALTD = HAL.shape[0]
+HALb = pd.read_excel('dist-homer-ampar-before-LTD-1.xlsx')
+HALa = pd.read_excel('dist-homer-ampar-after-LTD-1.xlsx')
+centerBA_LTD = np.load('homer-ampar-BfAf-LTD-1.npy')
+dist_AP_LTD1 = HALa[HALa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HALb[HALb['Homer Number']==centerBA_LTD[:,0]].Distance.values
 
-labelAMPARLTD = 'LTD ' + str(synNumbHALTD) +' synapses'
+HALb = pd.read_excel('dist-homer-ampar-before-LTD-2.xlsx')
+HALa = pd.read_excel('dist-homer-ampar-after-LTD-2.xlsx')
+centerBA_LTD = np.load('homer-ampar-BfAf-LTD-2.npy')
+dist_AP_LTD2 = HALa[HALa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HALb[HALb['Homer Number']==centerBA_LTD[:,0]].Distance.values
 
+HALb = pd.read_excel('dist-homer-ampar-before-LTD-3.xlsx')
+HALa = pd.read_excel('dist-homer-ampar-after-LTD-3.xlsx')
+centerBA_LTD = np.load('homer-ampar-BfAf-LTD-3.npy')
+dist_AP_LTD3 = HALa[HALa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HALb[HALb['Homer Number']==centerBA_LTD[:,0]].Distance.values
+
+HALb = pd.read_excel('dist-homer-ampar-before-LTD-4.xlsx')
+HALa = pd.read_excel('dist-homer-ampar-after-LTD-4.xlsx')
+centerBA_LTD = np.load('homer-ampar-BfAf-LTD-4.npy')
+dist_AP_LTD4 = HALa[HALa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HALb[HALb['Homer Number']==centerBA_LTD[:,0]].Distance.values
+
+HALb = pd.read_excel('dist-homer-ampar-before-LTD-5.xlsx')
+HALa = pd.read_excel('dist-homer-ampar-after-LTD-5.xlsx')
+centerBA_LTD = np.load('homer-ampar-BfAf-LTD-5.npy')
+dist_AP_LTD5 = HALa[HALa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HALb[HALb['Homer Number']==centerBA_LTD[:,0]].Distance.values
+
+
+dist_AP_LTD = np.concatenate((dist_AP_LTD1, dist_AP_LTD3,dist_AP_LTD5 ))
+label_AP_LTD = len(dist_AP_LTD)
 
 plt.figure()
-sns.distplot(dist_AP_CTR, bins=mybins, kde=False ,hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
-sns.distplot(HA['dist'], bins=mybins, label=labelAMPARCtr, kde=False, hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
+sns.distplot(dist_AP_LTD, label='LTD '+str(label_AP_LTD), bins=mybins, kde=False, hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
+sns.distplot(dist_AP_CTR, label='Control ' +str(label_AP_CTR) , bins=mybins, kde=False ,hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
+
 plt.xlim(xlim)
+plt.ylim(ylim)
 #plt.plot(xline, yline)
 #plt.plot(xlinep, yline, 'r')
 plt.legend()
@@ -66,32 +94,52 @@ plt.xticks(np.arange(-500,600,100))
 
 
 ###############NMDAR Control####################
-HN1 = pd.read_excel('dist-change-homer-nmdar-ctr-1.xlsx', names= ['before', 'after', 'dist_h-h'])
-HN2 = pd.read_excel('dist-change-homer-nmdar-ctr-2.xlsx', names= ['before', 'after', 'dist_h-h'])
-HN = pd.concat([HN1,HN2],ignore_index=True)
-mskHN = HN['dist_h-h']<=max_dist
-HN['dist'] = HN['after'] - HN['before']
-HN = HN[mskHN]
-synNumbHNCtr = HN.shape[0]
-labelNMDARCtr = 'CTR ' + str(synNumbHNCtr) +' synapses'
+HNb = pd.read_excel('dist-homer-nmdar-before-CTR-1.xlsx')
+HNa = pd.read_excel('dist-homer-nmdar-after-CTR-1.xlsx')
+centerBA_CTR = np.load('homer-nmdar-BfAf-CTR-1.npy')
+dist_NM_CTR1 = HNa[HNa['Homer Number']==np.sort(centerBA_CTR[:,1])].Distance.values - HNb[HNb['Homer Number']==centerBA_CTR[:,0]].Distance.values
+
+HNb = pd.read_excel('dist-homer-nmdar-before-CTR-2.xlsx')
+HNa = pd.read_excel('dist-homer-nmdar-after-CTR-2.xlsx')
+centerBA_CTR = np.load('homer-nmdar-BfAf-CTR-2.npy')
+dist_NM_CTR2 = HNa[HNa['Homer Number']==np.sort(centerBA_CTR[:,1])].Distance.values - HNb[HNb['Homer Number']==centerBA_CTR[:,0]].Distance.values
 
 
-###########NMDAR LTD########################
-#HNL = pd.read_excel('dist-change-homer-nmdar-LTD-1.xlsx', names= ['before', 'after', 'dist_h-h'])
-#HNL = pd.read_excel('dist-change-homer-nmdar-LTD-2.xlsx', names= ['before', 'after', 'dist_h-h'])
-HNL = pd.read_excel('dist-change-homer-nmdar-LTD-3.xlsx', names= ['before', 'after', 'dist_h-h'])
-#HNL = pd.concat([HNL2, HNL3],ignore_index=True)
-mskHNL = HNL['dist_h-h']<=max_dist
-HNL['dist'] = HNL['after'] - HNL['before']
-HNL = HNL[mskHNL]
-synNumbHNLTD = HNL.shape[0]
 
-labelNMDARLTD = 'LTD ' + str(synNumbHNLTD) +' synapses'
+dist_NM_CTR = np.concatenate((dist_NM_CTR1,dist_NM_CTR2 ))
 
-#plot NMDAR+Control
+label_NM_CTR = len(dist_NM_CTR)
+
+
+##############NMDAR LTD###############################
+HNLb = pd.read_excel('dist-homer-nmdar-before-LTD-1.xlsx')
+HNLa = pd.read_excel('dist-homer-nmdar-after-LTD-1.xlsx')
+centerBA_LTD = np.load('homer-nmdar-BfAf-LTD-1.npy')
+dist_NM_LTD1 = HNLa[HNLa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HNLb[HNLb['Homer Number']==centerBA_LTD[:,0]].Distance.values
+
+HNLb = pd.read_excel('dist-homer-nmdar-before-LTD-2.xlsx')
+HNLa = pd.read_excel('dist-homer-nmdar-after-LTD-2.xlsx')
+centerBA_LTD = np.load('homer-nmdar-BfAf-LTD-2.npy')
+dist_NM_LTD2 = HNLa[HNLa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HNLb[HNLb['Homer Number']==centerBA_LTD[:,0]].Distance.values
+
+HNLb = pd.read_excel('dist-homer-nmdar-before-LTD-3.xlsx')
+HNLa = pd.read_excel('dist-homer-nmdar-after-LTD-3.xlsx')
+centerBA_LTD = np.load('homer-nmdar-BfAf-LTD-3.npy')
+dist_NM_LTD3 = HNLa[HNLa['Homer Number']==np.sort(centerBA_LTD[:,1])].Distance.values - HNLb[HNLb['Homer Number']==centerBA_LTD[:,0]].Distance.values
+
+dist_NM_LTD = np.concatenate((dist_NM_LTD1, dist_NM_LTD3 ))
+
+label_NM_LTD = len(dist_NM_LTD)
+
+
+
+
+
 plt.figure()
-sns.distplot(HNL['dist'], bins=mybins, label=labelNMDARLTD, kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-sns.distplot(HN['dist'], bins=mybins, label=labelNMDARCtr, kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
+sns.distplot(dist_NM_LTD, label='LTD '+str(label_NM_LTD), bins=mybins, kde=False, hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
+sns.distplot(dist_NM_CTR, label='Control ' +str(label_NM_CTR) , bins=mybins, kde=False ,hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
+plt.xlim(xlim)
+plt.ylim(ylim)
 #plt.plot(xline, yline)
 #plt.plot(xlinep, yline, 'r')
 plt.legend()
@@ -104,58 +152,3 @@ plt.xticks(np.arange(-500,600,100))
 
 
 
-plt.figure()
-sns.distplot(HAL['dist'], bins=mybins, label='Ampar '+labelAMPARLTD, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-sns.distplot(HNL['dist'], bins=mybins, label='Nmdar '+labelNMDARLTD, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-plt.legend()
-plt.xlabel('Relative Distance (nm)')
-plt.ylabel('Relative Frequency')
-plt.title('Relative Distance Comparison Between Nmdar/Homer and Ampar/Homer LTD')
-plt.xticks(np.arange(-500,600,100))
-
-
-
-
-plt.figure()
-sns.distplot(HA['dist'], bins=mybins, label=labelAMPARCtr, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-sns.distplot(HN['dist'], bins=mybins, label=labelNMDARCtr, kde=False,hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-plt.legend()
-plt.xlabel('Relative Distance (nm)')
-plt.ylabel('Relative Frequency')
-plt.title('Relative Distance Comparison Between Nmdar/Homer and Ampar/Homer CTR')
-plt.xticks(np.arange(-500,600,100))
-
-
-#########Not dist change
-bins2 = np.arange(0,500,30)
-plt.figure()
-sns.distplot(np.log10(HAL['before']), bins=30, label='AMPAR Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1))
-plt.legend()
-#plt.xlim(0,500)
-plt.figure()
-sns.distplot(np.log10(HAL['after']), bins=30, label='AMPAR After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
-plt.legend()
-#plt.xlim(0,500)
-plt.figure()
-sns.distplot(np.log10(HA['before']), bins=30, label='AMPAR Ctr Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
-#plt.xlim(0,500)
-plt.figure()
-sns.distplot(np.log10(HA['after']), bins=30, label='AMPAR Ctr After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1 ))
-#plt.xlim(0,500)
-
-plt.legend()
-
-
-plt.figure()
-sns.distplot(HNL['before'], bins=bins2, label='NMDAR Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-plt.legend()
-plt.figure()
-sns.distplot(HNL['after'],  bins=bins2, label='NMDARR After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-plt.legend()
-plt.figure()
-sns.distplot(HN['before'], bins=bins2, label='NMDAR CTr Before', kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-plt.legend()
-plt.figure()
-sns.distplot(HN['after'],  bins=bins2, label='NMDARR Ctr After', kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
-plt.legend()
-plt.show()

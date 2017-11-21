@@ -20,10 +20,12 @@ from scipy import spatial
 
 
 
-fileHomer1 = np.load('Homer-before-clusters-centers-CTR-1.npy').flat[0]
-fileQD1 = np.load('Ampar-before-particles-centers-CTR-1.npy').flat[0]
+fileHomer1 = np.load('Homer-before-clusters-centers-LTD-3.npy').flat[0]
+fileQD1 = np.load('Nmdar-before-particles-centers-LTD-3.npy').flat[0]
 
 
+fileHomer2 = np.load('Homer-after-clusters-centers-LTD-3.npy').flat[0]
+fileQD2 = np.load('Nmdar-after-particles-centers-LTD-3.npy').flat[0]
 
 
 
@@ -64,8 +66,6 @@ ax.scatter(distPdframe_before['QD Center x'],distPdframe_before['QD Center y'],s
 ########################################################################################################
 
 
-fileHomer2 = np.load('Homer-after-clusters-centers-CTR-1.npy').flat[0]
-fileQD2 = np.load('Ampar-after-particles-centers-CTR-1.npy').flat[0]
 
 
 
@@ -100,12 +100,12 @@ hafter = distPdframe_after.loc[:,'Homer Center x':'Homer Center z'].values.tolis
 for ind, row in distPdframe_before.iterrows():
     hbefore = row['Homer Center x':'Homer Center z']
     distance, index = spatial.KDTree(hafter).query(hbefore)
-    if distance<=1000.00:
+    if distance<=500.00:
         tempTable = [row['Homer Number'], distPdframe_after.iloc[index]['Homer Number']]
         homerBfAf.append(tempTable)
         
 homerBfAf = np.array(homerBfAf)
-print(homerBfAf.shape)
+np.save('homer-nmdar-BfAf-LTD-3.npy', homerBfAf)
 
 hb_mask = distPdframe_before['Homer Number'].isin(homerBfAf[:][:,0])
 hf_mask = distPdframe_after['Homer Number'].isin(homerBfAf[:][:,1])
@@ -119,11 +119,14 @@ ax.scatter(distPdframe_after[hf_mask].loc[:,'Homer Center x'],distPdframe_after[
 
 
 
-writer = pd.ExcelWriter('dist-homer-ampar-before-ctr-1.xlsx')
+writer = pd.ExcelWriter('dist-homer-nmdar-before-LTD-3.xlsx')
 distPdframe_before[hb_mask].to_excel(writer, 'sheet1')
 writer.save()
 
-writer = pd.ExcelWriter('dist-homer-ampar-after-ctr-1.xlsx')
+writer = pd.ExcelWriter('dist-homer-nmdar-after-LTD-3.xlsx')
 distPdframe_after[hf_mask].to_excel(writer, 'sheet1')
 writer.save()
 
+print('homerBfAf = ', homerBfAf.shape)
+print('Before = ', distPdframe_before[hb_mask].shape)
+print('After = ', distPdframe_after[hf_mask].shape)

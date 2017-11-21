@@ -52,7 +52,7 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
     
 
 ##############################################################################
-fileName_QD1 = 'ampar-after-for_diffusion-CTR-1.txt'
+fileName_QD1 = 'nmdar-after-for_diffusion-LTD-3.txt'
 #fileName_QD2 = 'nmdar-before-for_diffusion-CTR-2.txt'
 #fileName_QD3 = 'nmdar-after-for_diffusion-LTD-3.txt'
 data_QD1 = pd.read_csv(fileName_QD1, sep="\t");
