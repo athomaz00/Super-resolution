@@ -52,51 +52,55 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
     
 
 ##############################################################################
-fileName_QD1 = 'nmdar-after-for_diffusion-LTD-3.txt'
-#fileName_QD2 = 'nmdar-before-for_diffusion-CTR-2.txt'
-#fileName_QD3 = 'nmdar-after-for_diffusion-LTD-3.txt'
-data_QD1 = pd.read_csv(fileName_QD1, sep="\t");
-#data_QD2 = pd.read_csv(fileName_QD2, sep="\t");
-#data_QD3 = pd.read_csv(fileName_QD3, sep="\t");
-data_QD = data_QD1
-#data_QD = pd.concat([data_QD1, data_QD2, data_QD2])
-data_QD = data_QD.rename(columns={'X (nm)': 'x', 'Y (nm)':'y', 'Z (nm)':'z', 'Frame Number':'frame'})
-data_QD = data_QD[np.abs(data_QD['z']<600)]
-data_QD['z'] = data_QD['z']*0.79
-
-
-result_tracking = tp.link_df(data_QD, 1000.0, memory=10, pos_columns=['x', 'y', 'z'])
-
-t1 = tp.filter_stubs(result_tracking,10)
-#print(t1.particle.nunique())
-
-
-#Construct filename output for Tracking positions
-spt = fileName_QD1.split("for_diffusion")
-fileNameTrack = spt[0] + 'tracking' + spt[1].split('.txt')[0]
-for j in range(2,6):
-    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
-        fileNameTrack = fileNameTrack +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
-        
-    
-
-
-writer = pd.ExcelWriter(fileNameTrack+'.xlsx')
-t1.to_excel(writer, 'sheet1')
-writer.save()
+#fileName_QD1 = 'nmdar-after-for_diffusion-LTD-3.txt'
+##fileName_QD2 = 'nmdar-before-for_diffusion-CTR-2.txt'
+##fileName_QD3 = 'nmdar-after-for_diffusion-LTD-3.txt'
+#data_QD1 = pd.read_csv(fileName_QD1, sep="\t");
+##data_QD2 = pd.read_csv(fileName_QD2, sep="\t");
+##data_QD3 = pd.read_csv(fileName_QD3, sep="\t");
+#data_QD = data_QD1
+##data_QD = pd.concat([data_QD1, data_QD2, data_QD2])
+#data_QD = data_QD.rename(columns={'X (nm)': 'x', 'Y (nm)':'y', 'Z (nm)':'z', 'Frame Number':'frame'})
+#data_QD = data_QD[np.abs(data_QD['z']<600)]
+#data_QD['z'] = data_QD['z']*0.79
+#
+#
+#result_tracking = tp.link_df(data_QD, 1000.0, memory=10, pos_columns=['x', 'y', 'z'])
+#
+#t1 = tp.filter_stubs(result_tracking,10)
+##print(t1.particle.nunique())
+#
+#
+##Construct filename output for Tracking positions
+#spt = fileName_QD1.split("for_diffusion")
+#fileNameTrack = spt[0] + 'tracking' + spt[1].split('.txt')[0]
+#for j in range(2,6):
+#    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
+#        fileNameTrack = fileNameTrack +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
+#        
+#    
+#
+#
+#writer = pd.ExcelWriter(fileNameTrack+'.xlsx')
+#t1.to_excel(writer, 'sheet1')
+#writer.save()
 
 #t1[(t1['x']>59930) & (t1['x']<59940)];
 #t1[t1['particle']==76] #FIRST PARTICLE IN MATLAB;
 
 #t1 = pd.read_excel('result_tracking_py.xlsx')
-#t1 = pd.read_excel('ampar-before-tracking-CTR-1-4.xlsx')
+
+dist = pd.read_excel('dist-homer-nmdar-after-LTD-3.xlsx')
+
+fileTrackName = 'nmdar-after-tracking-LTD-3.xlsx'
+t1 = pd.read_excel(fileTrackName)
 
 ##loop through the particles to calculate msd for 10 steps
 tSteps = 10;
-nParticles = t1.particle.nunique()
+nParticles = dist['QD Number'].shape[0]
 Trace_range = np.zeros((nParticles,1))
 Dif = np.zeros((nParticles,4))
-for i, part in enumerate(t1.particle.unique()):
+for i, part in enumerate(np.sort(dist['QD Number'].tolist())):
     dp = np.where(t1.particle==part) #range of rows of the particle in the results tracking
     dplength = len(dp)
     dpmax = np.max(dp)
@@ -148,20 +152,19 @@ Dif_pd['Diff Coeff'] = Dif_pd/(dt*2*3*1E6)
 
 
 
-
-
-
 #save diff track
-fileNameDiff = spt[0] + 'diff' + spt[1].split('.txt')[0]
-for j in range(2,6):
-    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
-        fileNameDiff = fileNameDiff +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
-        
-writer = pd.ExcelWriter(fileNameDiff+'.xlsx')
+spt = fileTrackName.split("-tracking-")
+#fileNameDiff = spt[0] + 'diff' + spt[1].split('.txt')[0]
+#for j in range(2,6):
+#    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
+#        fileNameDiff = fileNameDiff +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
+#        
+writer = pd.ExcelWriter(spt[0]+'-diff-traj-'+spt[1])
 Dif_pd.to_excel(writer, 'sheet1')
 writer.save()
 
-
+plt.figure()
+sns.distplot(np.log10(Dif_pd['Diff Coeff']), label='LTD ', bins=30, kde=False, hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
 
 
 
