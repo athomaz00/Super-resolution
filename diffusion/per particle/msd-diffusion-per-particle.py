@@ -90,9 +90,9 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
 
 #t1 = pd.read_excel('result_tracking_py.xlsx')
 
-dist = pd.read_excel('dist-homer-nmdar-after-LTD-3.xlsx')
+dist = pd.read_excel('dist-homer-ampar-before-CTR-1.xlsx')
 
-fileTrackName = 'nmdar-after-tracking-LTD-3.xlsx'
+fileTrackName = 'ampar-before-tracking-CTR-1.xlsx'
 t1 = pd.read_excel(fileTrackName)
 
 ##loop through the particles to calculate msd for 10 steps

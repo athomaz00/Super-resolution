@@ -20,12 +20,12 @@ from scipy import spatial
 
 
 
-fileHomer1 = np.load('Homer-before-clusters-centers-LTD-3.npy').flat[0]
-fileQD1 = np.load('Nmdar-before-particles-centers-LTD-3.npy').flat[0]
+fileHomer1 = np.load('Homer-before-clusters-centers-CTR-1.npy').flat[0]
+fileQD1 = np.load('Ampar-before-particles-centers-CTR-1.npy').flat[0]
 
 
-fileHomer2 = np.load('Homer-after-clusters-centers-LTD-3.npy').flat[0]
-fileQD2 = np.load('Nmdar-after-particles-centers-LTD-3.npy').flat[0]
+fileHomer2 = np.load('Homer-after-clusters-centers-CTR-1.npy').flat[0]
+fileQD2 = np.load('Ampar-after-particles-centers-CTR-1.npy').flat[0]
 
 
 
@@ -105,7 +105,7 @@ for ind, row in distPdframe_before.iterrows():
         homerBfAf.append(tempTable)
         
 homerBfAf = np.array(homerBfAf)
-np.save('homer-nmdar-BfAf-LTD-3.npy', homerBfAf)
+np.save('homer-ampar-BfAf-CTR-1.npy', homerBfAf)
 
 hb_mask = distPdframe_before['Homer Number'].isin(homerBfAf[:][:,0])
 hf_mask = distPdframe_after['Homer Number'].isin(homerBfAf[:][:,1])
@@ -119,11 +119,11 @@ ax.scatter(distPdframe_after[hf_mask].loc[:,'Homer Center x'],distPdframe_after[
 
 
 
-writer = pd.ExcelWriter('dist-homer-nmdar-before-LTD-3.xlsx')
+writer = pd.ExcelWriter('dist-homer-ampar-before-CTR-1.xlsx')
 distPdframe_before[hb_mask].to_excel(writer, 'sheet1')
 writer.save()
 
-writer = pd.ExcelWriter('dist-homer-nmdar-after-LTD-3.xlsx')
+writer = pd.ExcelWriter('dist-homer-ampar-after-CTR-1.xlsx')
 distPdframe_after[hf_mask].to_excel(writer, 'sheet1')
 writer.save()
 
