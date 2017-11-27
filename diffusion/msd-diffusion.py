@@ -20,11 +20,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
-import lmfit as lm
 import numpy as np
 import pandas as pd
-from scipy.integrate import trapz
-from scipy.optimize import curve_fit
 import scipy.spatial.distance as spd
 import scipy.spatial as sps
 import trackpy as tp
