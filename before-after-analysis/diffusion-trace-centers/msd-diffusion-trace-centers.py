@@ -55,8 +55,8 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
 
 ##############################################################################
 #File names
-fileName_QD1 = 'ampar-after-for_diffusion-LTD-3.txt'
-fileName_Homer = 'homer_after-LTD-3.xlsx'
+fileName_QD1 = 'ampar-after-for_diffusion-CTR-4.txt'
+fileName_Homer = 'homer_after-CTR-4.xlsx'
 
 ##############################################################################
 

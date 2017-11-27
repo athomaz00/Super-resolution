@@ -11,10 +11,10 @@
 # 
 # =============================================================================
 
-import matplotlib as mpl
+
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+sns.set()
 import numpy as np
 import pandas as pd
 
@@ -23,8 +23,8 @@ from scipy import spatial
 
 
 #File names
-fileName_Before = 'homer-ampar-before-diff-trace-dist-LTD-3.xlsx'
-fileName_After  = 'homer-ampar-after-diff-trace-dist-LTD-3.xlsx'
+fileName_Before = 'homer-ampar-before-diff-trace-dist-CTR-4.xlsx'
+fileName_After  = 'homer-ampar-after-diff-trace-dist-CTR-4.xlsx'
 
 data_Before = pd.read_excel(fileName_Before)
 data_After = pd.read_excel(fileName_After)
@@ -50,48 +50,15 @@ pairPd = pd.DataFrame(pairTable, columns=['Homer_Number_bef', 'Homer_x_bef', 'Ho
 plt.figure()
 plt.scatter(pairPd['Homer_x_bef'],pairPd['Homer_y_bef'], s=10)
 plt.scatter(pairPd['Homer_x_afe'],pairPd['Homer_y_afe'], alpha=0.6, s=10)
-        
-dist_Change = pairPd['Distance_afe'] - pairPd['Distance_bef']
+   
 
+fileName_Split = fileName_Before.split('-diff-trace-dist-')
 
-sns.set(rc={'axes.facecolor':'#32353d'})
-cmap = plt.cm.get_cmap('seismic', 4) 
-normalize = mpl.colors.Normalize(vmin=-200, vmax=200)
-plt.figure()
-plt.scatter(pairPd['Homer_x_afe'],pairPd['Homer_y_afe'], alpha=0.6, c=dist_Change, s=25, cmap=cmap, norm=normalize )
-plt.colorbar()
-plt.grid(False)
+fileName_Save = fileName_Split[0]+'-after'+'-diff-trace-dist-'+fileName_Split[1]
 
-
-sns.set()
-mybins  = np.arange(-500,500,50)
-xlim = (-500,500)
-ylim = (0,0.0045)
-
-plt.figure()
-sns.distplot(dist_Change, bins=mybins, kde=False, hist_kws=dict(edgecolor="k", linewidth=1,  normed=True))
-plt.xlim(xlim)
-plt.ylim(ylim)
-
-
-coeff_Change = (pairPd['Diff_Coeff_afe']) - (pairPd['Diff_Coeff_bef'])
-
-sns.set(rc={'axes.facecolor':'#32353d'})
-cmap = plt.cm.get_cmap('seismic', 6) 
-normalize = mpl.colors.Normalize(vmin=-0.15, vmax=0.15)
-plt.figure()
-plt.scatter(pairPd['Homer_x_afe'],pairPd['Homer_y_afe'], alpha=0.6, c=coeff_Change, s=25, cmap=cmap, norm=normalize)
-plt.colorbar()
-plt.grid(False)
-
-trace_Change = (pairPd['Trace_Range_afe']) - (pairPd['Trace_Range_bef'])
-
-sns.set(rc={'axes.facecolor':'#32353d'})
-cmap = plt.cm.get_cmap('seismic',4) 
-normalize = mpl.colors.Normalize(vmin=-1000, vmax=1000)
-plt.figure()
-plt.scatter(pairPd['Homer_x_afe'],pairPd['Homer_y_afe'], alpha=0.6, c=trace_Change, s=25, cmap=cmap, norm=normalize)
-plt.colorbar()
-plt.grid(False)
+     
+writer = pd.ExcelWriter(fileName_Save)
+pairPd.to_excel(writer, 'sheet1')
+writer.save()
 
 
