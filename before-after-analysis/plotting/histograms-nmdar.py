@@ -48,18 +48,67 @@ distChange_LTD3 =  data_LTD3['Distance_afe'] - data_LTD3['Distance_bef']
 
 distChange_LTD = np.concatenate((distChange_LTD1, distChange_LTD3)) #, distChange_LTD3))
 
+#plt.figure()
+#results, edges = np.histogram(distChange_LTD, bins=mybins)
+#binWidth = edges[1] - edges[0]
+#results = results/results.max()
+#plt.bar(edges[:-1], results, binWidth)
+#
+#results, edges = np.histogram(distChange_CTR, bins=mybins)
+#binWidth = edges[1] - edges[0]
+#results = results/results.max()
+#plt.bar(edges[:-1], results, binWidth, alpha=0.4)
+
+
+
 
 plt.figure()
-sns.distplot(distChange_LTD, bins=mybins, kde=False , hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
+sns.distplot(distChange_LTD, bins=mybins, kde=False , hist_kws=dict(edgecolor="k", linewidth=1,normed=True))
 sns.distplot(distChange_CTR, bins=mybins, kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
 
 
 plt.xlim(xlim)
-plt.ylim(ylim)
+#plt.ylim(ylim)
 #plt.plot(xline, yline)
 #plt.plot(xlinep, yline, 'r')
 plt.legend()
 plt.xlabel('Relative Distance (nm)')
 plt.ylabel('Relative Frequency')
-plt.title('Relative Distance Homer-Ampar')
+plt.title('Relative Distance Homer-')
 plt.xticks(np.arange(-500,600,100))
+
+
+
+
+coeffbins = np.arange(-5.0,0.0,0.2)
+
+coeffChange_CTR1_bef = np.log10(data_CTR1['Diff_Coeff_bef'])
+coeffChange_CTR2_bef = np.log10(data_CTR2['Diff_Coeff_bef'])
+
+coeffChange_CTR1_afe = np.log10(data_CTR1['Diff_Coeff_afe'])
+coeffChange_CTR2_afe = np.log10(data_CTR2['Diff_Coeff_afe'])
+
+coeffChange_CTR_bef =  np.concatenate((coeffChange_CTR1_bef, coeffChange_CTR2_bef))
+coeffChange_CTR_afe =  np.concatenate((coeffChange_CTR1_afe, coeffChange_CTR2_afe))
+
+coeffChange_LTD1_bef = np.log10(data_LTD1['Diff_Coeff_bef'])
+coeffChange_LTD3_bef = np.log10(data_LTD3['Diff_Coeff_bef'])
+
+coeffChange_LTD1_afe = np.log10(data_LTD1['Diff_Coeff_afe'])
+coeffChange_LTD3_afe = np.log10(data_LTD3['Diff_Coeff_afe'])
+
+
+coeffChange_LTD_bef =  np.concatenate((coeffChange_LTD1_bef, coeffChange_LTD3_bef))
+coeffChange_LTD_afe =  np.concatenate((coeffChange_LTD1_afe, coeffChange_LTD3_afe))
+
+
+
+
+
+plt.figure()
+sns.distplot(coeffChange_CTR_afe, bins=coeffbins, kde=False , hist_kws=dict(edgecolor="k", linewidth=1,normed=True))
+sns.distplot(coeffChange_CTR_bef, bins=coeffbins, kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
+
+plt.figure()
+sns.distplot(coeffChange_LTD_afe, bins=coeffbins, kde=False , hist_kws=dict(edgecolor="k", linewidth=1,normed=True))
+sns.distplot(coeffChange_LTD_bef, bins=coeffbins, kde=False, hist_kws=dict(edgecolor="k", linewidth=1, normed=True))
