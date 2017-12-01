@@ -55,8 +55,8 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
 
 ##############################################################################
 #File names
-fileName_QD1 = 'ampar-after-for_diffusion-CTR-4.txt'
-fileName_Homer = 'homer_after-CTR-4.xlsx'
+fileName_QD1 = 'nmdar-before-for_diffusion-LTD-3.txt'
+fileName_Homer = 'homer_before-LTD-3.xlsx'
 
 ##############################################################################
 
@@ -80,16 +80,16 @@ t1 = tp.filter_stubs(result_tracking,10)
 #Construct filename output for Tracking positions
 spt = fileName_QD1.split("for_diffusion")
 fileNameTrack = spt[0] + 'tracking' + spt[1].split('.txt')[0]
-for j in range(2,6):
-    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
-        fileNameTrack = fileNameTrack +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
-        
-    
+#for j in range(2,6):
+#    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
+#        fileNameTrack = fileNameTrack +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
+#        
+#    
 
 
-#writer = pd.ExcelWriter(fileNameTrack+'.xlsx')
-#t1.to_excel(writer, 'sheet1')
-#writer.save()
+writer = pd.ExcelWriter(fileNameTrack+'.xlsx')
+t1.to_excel(writer, 'sheet1')
+writer.save()
 
 
 ##loop through the particles to calculate msd for 10 steps
