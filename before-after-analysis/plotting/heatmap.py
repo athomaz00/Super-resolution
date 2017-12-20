@@ -13,8 +13,8 @@ import seaborn as sns
 sns.set()
 
 
-fileName_AMPAR1  = 'homer-ampar-before-after-diff-trace-dist-LTD-1.xlsx'
-fileName_AMPAR3  = 'homer-ampar-before-after-diff-trace-dist-LTD-3.xlsx'
+fileName_AMPAR1  = 'homer-ampar-before-after-diff-trace-dist-LTD-6.xlsx'
+fileName_AMPAR3  = 'homer-ampar-before-after-diff-trace-dist-LTD-7.xlsx'
 
 AMPAR1 = pd.read_excel(fileName_AMPAR1)
 AMPAR3 = pd.read_excel(fileName_AMPAR3)
@@ -29,8 +29,8 @@ sns.kdeplot(np.log10(AMPAR['Diff_Coeff_afe']), np.log10(AMPAR['Trace_Range_afe']
 
 
 
-fileName_NMDAR1  = 'homer-nmdar-before-after-diff-trace-dist-LTD-1.xlsx'
-fileName_NMDAR3  = 'homer-nmdar-before-after-diff-trace-dist-LTD-3.xlsx'
+fileName_NMDAR1  = 'homer-nmdar-before-after-diff-trace-dist-LTD-6.xlsx'
+fileName_NMDAR3  = 'homer-nmdar-before-after-diff-trace-dist-LTD-7.xlsx'
 
 NMDAR1 = pd.read_excel(fileName_NMDAR1)
 NMDAR3 = pd.read_excel(fileName_NMDAR3)

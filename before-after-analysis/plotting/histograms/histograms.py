@@ -40,23 +40,23 @@ distChange_CTR4 = data_CTR4['Distance_afe'] - data_CTR4['Distance_bef']
 distChange_CTR =  np.concatenate((distChange_CTR1, distChange_CTR2, distChange_CTR4))
 
 fileName_LTD1  = 'homer-ampar-before-after-diff-trace-dist-LTD-1.xlsx'
-fileName_LTD2  = 'homer-ampar-before-after-diff-trace-dist-LTD-2.xlsx'
+#fileName_LTD2  = 'homer-ampar-before-after-diff-trace-dist-LTD-2.xlsx'
 fileName_LTD3  = 'homer-ampar-before-after-diff-trace-dist-LTD-3.xlsx'
-fileName_LTD4  = 'homer-ampar-before-after-diff-trace-dist-LTD-4.xlsx'
-fileName_LTD5  = 'homer-ampar-before-after-diff-trace-dist-LTD-5.xlsx'
+#fileName_LTD4  = 'homer-ampar-before-after-diff-trace-dist-LTD-4.xlsx'
+#fileName_LTD5  = 'homer-ampar-before-after-diff-trace-dist-LTD-5.xlsx'
 
 data_LTD1 = pd.read_excel(fileName_LTD1)
-data_LTD2 = pd.read_excel(fileName_LTD2)
+#data_LTD2 = pd.read_excel(fileName_LTD2)
 data_LTD3 = pd.read_excel(fileName_LTD3)
-data_LTD4 = pd.read_excel(fileName_LTD4)
-data_LTD5 = pd.read_excel(fileName_LTD5)
+#data_LTD4 = pd.read_excel(fileName_LTD4)
+#data_LTD5 = pd.read_excel(fileName_LTD5)
 
 
 distChange_LTD1 =  data_LTD1['Distance_afe'] - data_LTD1['Distance_bef']
-distChange_LTD2 =  data_LTD2['Distance_afe'] - data_LTD2['Distance_bef']
+#distChange_LTD2 =  data_LTD2['Distance_afe'] - data_LTD2['Distance_bef']
 distChange_LTD3 =  data_LTD3['Distance_afe'] - data_LTD3['Distance_bef']
-distChange_LTD4 =  data_LTD4['Distance_afe'] - data_LTD4['Distance_bef']
-distChange_LTD5 =  data_LTD5['Distance_afe'] - data_LTD5['Distance_bef']
+#distChange_LTD4 =  data_LTD4['Distance_afe'] - data_LTD4['Distance_bef']
+#distChange_LTD5 =  data_LTD5['Distance_afe'] - data_LTD5['Distance_bef']
 
 distChange_LTD = np.concatenate((distChange_LTD1, distChange_LTD3)) #, distChange_LTD3))
 

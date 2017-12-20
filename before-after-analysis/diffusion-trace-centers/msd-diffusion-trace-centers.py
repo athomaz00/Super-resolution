@@ -55,14 +55,14 @@ def fMSD_vect(x,y,z, dpmax, dpmin,tSteps):
 
 ##############################################################################
 #File names
-fileName_QD1 = 'nmdar-before-for_diffusion-LTD-3.txt'
-fileName_Homer = 'homer_before-LTD-3.xlsx'
+fileName_QD1 = 'ampar-before-for-diffusion-LTD-7.xlsx'
+fileName_Homer = 'homer-before-LTD-7.xlsx'
 
 ##############################################################################
 
+data_QD1 = pd.read_excel(fileName_QD1)
 
-
-data_QD1 = pd.read_csv(fileName_QD1, sep="\t")
+#data_QD1 = pd.read_csv(fileName_QD1, sep="\t")
 
 data_QD = data_QD1
 
@@ -78,8 +78,8 @@ t1 = tp.filter_stubs(result_tracking,10)
 
 
 #Construct filename output for Tracking positions
-spt = fileName_QD1.split("for_diffusion")
-fileNameTrack = spt[0] + 'tracking' + spt[1].split('.txt')[0]
+spt = fileName_QD1.split("for-diffusion")
+fileNameTrack = spt[0] + 'tracking' + spt[1].split('.xlsx')[0]
 #for j in range(2,6):
 #    if ('fileName_QD' + str(j)) in vars(): # search through all vars for fileName_Qd
 #        fileNameTrack = fileNameTrack +'-' + list(filter(str.isdigit, vars()['fileName_QD' + str(j)]))[0] #add the number at fileName QD
@@ -133,8 +133,11 @@ for i, part in enumerate(t1.particle.unique()):
     
     
     
-    plt.plot(msd1)
-    plt.xlim(0,3)
+#    plt.plot(msd1)
+#    plt.xlim(0,3)
+    
+
+    plt.plot(msdcut)
     
 
 
@@ -154,7 +157,7 @@ Dif_pd['Diff-Coeff'] = Dif_pd['Coeff']/(dt*2*3*1E6)
 ###########################Cluster Center Calculation
 #Load super resolution file and plot the 2D points
 file1 = pd.read_excel(fileName_Homer, names=['x', 'y', 'z'])
-
+file1 = file1.dropna()
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -210,7 +213,8 @@ for i, part in enumerate(fileDiff.Particle.unique()):
 
 
 
-distTable1 =[]
+distTable1 =np.empty((0,8), float)
+center_QD_table = []
 receptorPoints = fileDiff.loc[:, 'QD_x':'QD_z']
 
 for i, hc in enumerate(centersHomer):
@@ -218,21 +222,39 @@ for i, hc in enumerate(centersHomer):
     distance,ind = spatial.KDTree(receptorPoints.values).query(homerPoints)
     msk = receptorPoints.values[ind] == receptorPoints
     indexfileDif = msk.query('QD_x').index[0]
-    if distance <=2000.0:
-        tempTable = [i, fileDiff.loc[indexfileDif, 'Particle'], fileDiff.loc[indexfileDif, 'Diff-Coeff'], fileDiff.loc[indexfileDif, 'Trace-Range'], fileDiff.loc[indexfileDif, 'QD_x'], fileDiff.loc[indexfileDif, 'QD_y'], fileDiff.loc[indexfileDif, 'QD_z'], distance]
-        distTable1.append(tempTable)
+    center_QD_test = [fileDiff.loc[indexfileDif, 'QD_x'], fileDiff.loc[indexfileDif, 'QD_y'], fileDiff.loc[indexfileDif, 'QD_z'] ]
+    if distance <=900.0 and (center_QD_test not in center_QD_table):
+        tempTable = [i, fileDiff.loc[indexfileDif, 'Particle'], fileDiff.loc[indexfileDif, 'Diff-Coeff'], fileDiff.loc[indexfileDif, 'Trace-Range'], fileDiff.loc[indexfileDif, 'QD_x'], fileDiff.loc[indexfileDif, 'QD_y'], fileDiff.loc[indexfileDif, 'QD_z'], float("{:.5f}".format(distance))]
+        distTable1 = np.append(distTable1, [tempTable], axis=0)
+        center_QD_table.append([fileDiff.loc[indexfileDif, 'QD_x'], fileDiff.loc[indexfileDif, 'QD_y'], fileDiff.loc[indexfileDif, 'QD_z']])
         ax.scatter(fileDiff.loc[indexfileDif, 'QD_x'], fileDiff.loc[indexfileDif, 'QD_y'], c='purple', s=10)
+    elif (center_QD_test in center_QD_table):
+       indeDistTable1 = np.where(center_QD_test == distTable1[:,4:7])[0][0]
+       print(' actual distance: ' + str(distTable1[indeDistTable1, 7]) + ' / new dist: ' + str(distance) + ' / ind: '+ str(  indeDistTable1))
+       if distTable1[indeDistTable1,7] > distance:
+           print('Substituting QD at '+ ' / ind: '+ str(  indeDistTable1))
+           distTable1[indeDistTable1, 1] = fileDiff.loc[indexfileDif, 'Particle']
+           distTable1[indeDistTable1, 2] = fileDiff.loc[indexfileDif, 'Diff-Coeff']
+           distTable1[indeDistTable1, 3] = fileDiff.loc[indexfileDif, 'Trace-Range']
+           distTable1[indeDistTable1, 4] = center_QD_test[1]
+           distTable1[indeDistTable1, 5] = center_QD_test[2]
+           distTable1[indeDistTable1, 6] = center_QD_test[0]
+           distTable1[indeDistTable1, 7] = distance
+           
+           
+           
+           
+      
     
-    
-finalTable = []
+finalTable = [] 
 for i, items in enumerate(distTable1):
-    aa = [items[0], centersHomer[items[0]][1], centersHomer[items[0]][2], centersHomer[items[0]][3], items[1], items[4], items[5], items[6],  items[2], items[3], items[7]]
+    aa = [items[0], centersHomer[int(items[0])][1], centersHomer[int(items[0])][2], centersHomer[int(items[0])][3], items[1], items[4], items[5], items[6],  items[2], items[3], items[7]]
     finalTable.append(aa)
     
 finalPd = pd.DataFrame(data=finalTable, columns=['Homer_Number', 'Homer_x', 'Homer_y', 'Homer_z', 'Receptor_Number', 'Receptor_x', 'Receptor_y', 'Receptor_z', 'Diff_Coeff', 'Trace_Range', 'Distance'])
 
-fileSave = fileName_QD1.split('-for_diffusion-')
-fileSave = 'homer-'+fileSave[0] + '-diff-trace-dist-' + fileSave[1].split('.txt')[0]
+fileSave = fileName_QD1.split('-for-diffusion-')
+fileSave = 'homer-'+fileSave[0] + '-diff-trace-dist-' + fileSave[1].split('.xlsx')[0]
 
 writer = pd.ExcelWriter(fileSave+'.xlsx')
 finalPd.to_excel(writer, 'sheet1')

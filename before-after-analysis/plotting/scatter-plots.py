@@ -13,8 +13,8 @@ import pandas as pd
 import seaborn as sns
 sns.set()
 
-fileName_AMPAR_LTD3  = 'homer-ampar-before-after-diff-trace-dist-LTD-3.xlsx'
-fileName_NMDAR_LTD3  = 'homer-nmdar-before-after-diff-trace-dist-LTD-3.xlsx'
+fileName_AMPAR_LTD3  = 'homer-ampar-before-after-diff-trace-dist-LTD-7.xlsx'
+fileName_NMDAR_LTD3  = 'homer-nmdar-before-after-diff-trace-dist-LTD-7.xlsx'
 
 AMPAR_LTD = pd.read_excel(fileName_AMPAR_LTD3)
 NMDAR_LTD = pd.read_excel(fileName_NMDAR_LTD3)

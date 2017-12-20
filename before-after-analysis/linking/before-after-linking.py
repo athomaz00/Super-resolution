@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # =============================================================================
 # This code links the Homer Cluster Center from the before file to the after file.
-# If the cluster in the after file is less than 500 um from the cluster in the before
+# If the cluster in the after file is less than 500 nm from the cluster in the before
 # file the code links them.
 # input: xlsx file from the msd-diffusion-trace-centers.py code for before at variable fileName_Before
 # input: xlsx file from the msd-diffusion-trace-centers.py code for after at variable fileName_After
@@ -23,8 +23,8 @@ from scipy import spatial
 
 
 #File names
-fileName_Before = 'homer-ampar-before-diff-trace-dist-CTR-4.xlsx'
-fileName_After  = 'homer-ampar-after-diff-trace-dist-CTR-4.xlsx'
+fileName_Before = 'homer-nmdar-before-diff-trace-dist-LTD-7.xlsx'
+fileName_After  = 'homer-nmdar-after-diff-trace-dist-LTD-7.xlsx'
 
 data_Before = pd.read_excel(fileName_Before)
 data_After = pd.read_excel(fileName_After)
