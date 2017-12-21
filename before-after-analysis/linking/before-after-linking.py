@@ -12,6 +12,7 @@
 # =============================================================================
 
 
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
@@ -20,11 +21,11 @@ import pandas as pd
 
 from scipy import spatial
 
-
+plt.close('all')
 
 #File names
-fileName_Before = 'homer-nmdar-before-diff-trace-dist-LTD-7.xlsx'
-fileName_After  = 'homer-nmdar-after-diff-trace-dist-LTD-7.xlsx'
+fileName_Before = 'homer-nmdar-before-distance-LTD-7.xlsx'
+fileName_After  = 'homer-nmdar-after-distance-LTD-7.xlsx'
 
 data_Before = pd.read_excel(fileName_Before)
 data_After = pd.read_excel(fileName_After)
@@ -46,19 +47,20 @@ for i, row in data_Before.iterrows():
             pairTable.append(tempTable)
     
 pairTable = np.array(pairTable)
-pairPd = pd.DataFrame(pairTable, columns=['Homer_Number_bef', 'Homer_x_bef', 'Homer_y_bef', 'Homer_z_bef', 'Receptor_Number_bef', 'Receptor_x_bef', 'Receptor_y_bef', 'Receptor_z_bef', 'Diff_Coeff_bef', 'Trace_Range_bef', 'Distance_bef', 'Homer_Number_afe', 'Homer_x_afe', 'Homer_y_afe', 'Homer_z_afe', 'Receptor_Number_afe', 'Receptor_x_afe', 'Receptor_y_afe', 'Receptor_z_afe', 'Diff_Coeff_afe', 'Trace_Range_afe', 'Distance_afe'])
+pairPd = pd.DataFrame(pairTable, columns=['Homer_Number_bef', 'Homer_x_bef', 'Homer_y_bef', 'Homer_z_bef', 'Receptor_Number_bef', 'Receptor_x_bef', 'Receptor_y_bef', 'Receptor_z_bef', 'Distance_bef', 'Homer_Number_afe', 'Homer_x_afe', 'Homer_y_afe', 'Homer_z_afe', 'Receptor_Number_afe', 'Receptor_x_afe', 'Receptor_y_afe', 'Receptor_z_afe', 'Distance_afe'])
 plt.figure()
 plt.scatter(pairPd['Homer_x_bef'],pairPd['Homer_y_bef'], s=10)
 plt.scatter(pairPd['Homer_x_afe'],pairPd['Homer_y_afe'], alpha=0.6, s=10)
    
 
-fileName_Split = fileName_Before.split('-diff-trace-dist-')
+fileName_Split = fileName_Before.split('-distance-')
 
-fileName_Save = fileName_Split[0]+'-after'+'-diff-trace-dist-'+fileName_Split[1]
+fileName_Save = fileName_Split[0]+'-after'+'-distance-'+fileName_Split[1]
 
      
 writer = pd.ExcelWriter(fileName_Save)
 pairPd.to_excel(writer, 'sheet1')
 writer.save()
 
-
+print('=================================================================')
+print(str(pairTable.shape[0]) + ' receptors/synapses after linking saved')
